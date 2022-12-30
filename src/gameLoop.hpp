@@ -8,6 +8,9 @@
 
 class GameLoop
 {
+      private:
+    i32 blockSize = 20;
+
       public:
     f96 time = 0.0f;
     f96 deltaTime = 0.0f;
@@ -34,6 +37,9 @@ class GameLoop
     void tickLogic();
     void tickMovement();
     void draw();
+    void drawBackground();
+
+    bool canFit(iXY xy);
 
     GameLoop();
     ~GameLoop();

@@ -79,6 +79,13 @@ void Block::step(f96 deltaTime)
 
 void Block::draw()
 {
-    // draw block
-    DrawRectangle(positionVisualCurrent.x + OFFSET.x, positionVisualCurrent.y + OFFSET.y, blockVisualSize, blockVisualSize, BaseColor);
+    if(exist)
+    {
+        // draw block
+        DrawRectangle(positionVisualCurrent.x + OFFSET.x, positionVisualCurrent.y + OFFSET.y, blockVisualSize, blockVisualSize, BaseColor);
+    }
+    else  // TODO: remove this else branch, its just debug visualiser of used to Exist but now !Exist blocks
+    {
+        DrawRectangle(positionVisualCurrent.x + OFFSET.x, positionVisualCurrent.y + OFFSET.y, blockVisualSize, blockVisualSize, BLACK);
+    }
 }

@@ -35,7 +35,6 @@ void Grid::addVisualOffset(iXY offset)
         iXY tmp = grid[i].bucketPos;
         tmp.x += offset.x;
         tmp.y += offset.y;
-        std::cout << "tmp: " << tmp.x << ", " << tmp.y << std::endl;
         grid[i].bucketPos = tmp;
     }
 }
@@ -92,9 +91,6 @@ void Grid::drawBlocks()
 {
     for(u32 i = 0; i < WIDTH * HEIGHT; i++)
     {
-        if(grid[i].exist)
-        {
-            grid[i].draw();
-        }
+        grid[i].draw();
     }
 }

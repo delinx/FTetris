@@ -1,4 +1,5 @@
 #include "gameLoop.hpp"
+#include <iostream>
 #include <string>
 
 GameLoop::GameLoop()
@@ -16,13 +17,11 @@ void GameLoop::readKeyboard()
     if(IsKeyPressed(KEY_LEFT))
     {
         moveSide = -1;
-        std::cout << "left" << std::endl;
     }
     // move right
     else if(IsKeyPressed(KEY_RIGHT))
     {
         moveSide = 1;
-        std::cout << "right" << std::endl;
     }
     // rotate
     if(IsKeyPressed(KEY_UP))
@@ -67,8 +66,12 @@ void GameLoop::tickLogic()
     {
         if(moveSide != 0 && shape != NULL)
         {
-            shape->addVisualOffset({ moveSide, 0 });
-            skipWaiting = true;
+            if(canFit(iXY(moveSide, 0)))
+            {
+                std::cout << "can move" << std::endl;
+                shape->addVisualOffset({ moveSide, 0 });
+                skipWaiting = true;
+            }
         }
         // TODO: only skip wait if valid move
         resetInput();
@@ -78,6 +81,20 @@ void GameLoop::tickLogic()
     {
         std::cout << "[TICK] - " << std::to_string(time) << " - " << std::endl;
         lastTick = time;
+        // check if we skipWaiting, if we did then do not drop down, if we did not then drop down
+        if(!skipWaiting)
+        {
+            if(canFit(iXY(0, 1)))
+            {
+                std::cout << "going DOWN" << std::endl;
+                shape->addVisualOffset({ 0, 1 });
+            }
+            else
+            {
+                std::cout << "can not go DOWN, we hit THE BOTTOM" << std::endl;
+            }
+        }
+
         resetInput();
     }
 
@@ -112,4 +129,48 @@ void GameLoop::draw()
         return;
     }
     shape->drawBlocks();
+}
+
+bool GameLoop::canFit(iXY xy)
+{
+    if(bucket == NULL || shape == NULL)
+    {
+        return false;
+    }
+    for(i32 x = 0; x < shape->WIDTH; x++)
+    {
+        for(i32 y = 0; y < shape->HEIGHT; y++)
+        {
+            // if activeBlock cell is empty skip
+            if(!shape->get(iXY(x, y)).exist)
+            {
+                continue;
+            }
+            // if activeBlock is outside grid return false
+            i32 _x = shape->get(iXY(x, y)).bucketPos.x;
+            i32 _y = shape->get(iXY(x, y)).bucketPos.y;
+            if(xy.x + _x < 0 || xy.x + _x >= bucket->WIDTH || xy.y + _y < -4 || xy.y + _y >= bucket->HEIGHT)
+            {
+                std::cout << "out of bounds" << std::endl;
+                return false;
+            }
+            if(bucket->get(iXY(xy.x + _x, xy.y + _y)).exist)
+            {
+                std::cout << "collision" << std::endl;
+                return false;
+            }
+        }
+    }
+    return true;
+}
+
+void GameLoop::drawBackground()
+{
+    for(i32 x = 0; x < bucket->WIDTH; x++)
+    {
+        for(i32 y = 0; y < bucket->HEIGHT; y++)
+        {
+            DrawRectangle(x * blockSize, y * blockSize, blockSize, blockSize, RED);
+        }
+    }
 }

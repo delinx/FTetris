@@ -19,11 +19,6 @@ int main(int argc, char *argv[])
     SetTargetFPS(120);
 
     GameLoop gameLoop;
-    Block animationTest;
-    animationTest.exist = true;
-    animationTest.bucketPos = iXY(1, 1);
-    gameLoop.bucket->set({ 5, 5 }, animationTest);
-    gameLoop.bucket->set({ 5, 6 }, animationTest);
 
     while(!WindowShouldClose())
     {
@@ -38,6 +33,7 @@ int main(int argc, char *argv[])
         ClearBackground(GRAY);
         DrawFPS(10, 10);
         DrawText("FTetris", 190, 200, 20, LIGHTGRAY);
+        gameLoop.drawBackground();
         gameLoop.draw();
         EndDrawing();
 
