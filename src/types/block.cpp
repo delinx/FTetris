@@ -88,10 +88,27 @@ void Block::draw()
     if(exist)
     {
         // draw block
-        DrawRectangle(positionVisualCurrent.x + OFFSET.x, positionVisualCurrent.y + OFFSET.y, blockVisualSize, blockVisualSize, BaseColor);
+        i32 posX = positionVisualCurrent.x + OFFSET.x;
+        i32 posY = positionVisualCurrent.y + OFFSET.y;
+        DrawRectangle(posX, posY, blockVisualSize, blockVisualSize, BaseColor);
+        DrawRectangle(posX + 4, posY + 4, blockVisualSize - 8, blockVisualSize - 8, Color { 0, 0, 0, 50 });
+        DrawRectangleLinesEx(Rectangle {
+                                 (f32)(posX + 4),
+                                 (f32)(posY + 4),
+                                 (f32)(blockVisualSize - 8),
+                                 (f32)(blockVisualSize - 8),
+                             },
+                             1.f, GRAY);
+        DrawRectangleLinesEx(Rectangle {
+                                 (f32)(posX),
+                                 (f32)(posY),
+                                 (f32)(blockVisualSize),
+                                 (f32)(blockVisualSize),
+                             },
+                             1.f, DARKGRAY);
     }
     else  // TODO: remove this else branch, its just debug visualiser of used to Exist but now !Exist blocks
     {
-        DrawRectangle(positionVisualCurrent.x + OFFSET.x, positionVisualCurrent.y + OFFSET.y, blockVisualSize, blockVisualSize, BLACK);
+        DrawRectangle(positionVisualCurrent.x + OFFSET.x, positionVisualCurrent.y + OFFSET.y, blockVisualSize, blockVisualSize, Color { 0, 0, 0, 100 });
     }
 }
