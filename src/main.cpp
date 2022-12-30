@@ -1,3 +1,4 @@
+#include "gameLoop.hpp"
 #include "raylib.h"
 #include "types/types.hpp"
 
@@ -16,13 +17,12 @@ int main(int argc, char *argv[])
     InitWindow(screenWidth, screenHeight, "raylib [core] example - basic window");
     SetTargetFPS(120);
 
-    f96 time = 0.0f;
-
-    bool DEBUG = true;
+    GameLoop gameLoop;
 
     while(!WindowShouldClose())
     {
-        time += GetFrameTime();
+        gameLoop.time += GetFrameTime();
+        gameLoop.deltaTime = GetFrameTime();
 
         BeginDrawing();
         ClearBackground(GRAY);
@@ -33,7 +33,7 @@ int main(int argc, char *argv[])
         // debug toggle
         if(IsKeyReleased(KEY_TAB))
         {
-            DEBUG = !DEBUG;
+            gameLoop.DEBUG = !gameLoop.DEBUG;
         }
     }
 

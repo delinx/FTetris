@@ -1,14 +1,3 @@
----
-        EntityManager   BucketManager   ActiveShape     GameLogic
-Drawing     ***
-Bucket                      ***
-Shapes                       *              ***
-Win/Lose/Re-start                                          ***
-Input                                                      ***
-Timings                                                    ***
- 
-
-
 Animation can only play after block was placed! 
 There is no reason to make system which animates and plays at the same time!
 
@@ -27,3 +16,10 @@ Each placed tetrimo adds coins, combos add more coins
 There is a timer of ticks depleating coins every X time, every time cost is more
 Play wins if he does enough damage by some action?
 Other action leads to coins to win more time
+
+
+Spawn 
+Fall 
+Burn
+Animate
+Repeat
