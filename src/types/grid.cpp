@@ -9,6 +9,7 @@ Grid::Grid(u32 width, u32 height)
     {
         Block block;
         block.exist = false;
+        block.OFFSET = OFFSET;
         grid[i] = block;
     }
 }
@@ -16,6 +17,15 @@ Grid::Grid(u32 width, u32 height)
 Grid::~Grid()
 {
     delete[] grid;
+}
+
+void Grid::setVisualOffset(fXY offset)
+{
+    OFFSET = offset;
+    for(u32 i = 0; i < WIDTH * HEIGHT; i++)
+    {
+        grid[i].OFFSET = OFFSET;
+    }
 }
 
 void Grid::set(iXY xy, Block block)
@@ -44,13 +54,35 @@ void Grid::print()
             Block block = get({ x, y });
             if(block.exist)
             {
-                std::cout << "X";
+                std::cout << " " << block.BlockType << " ";
             }
             else
             {
-                std::cout << " ";
+                std::cout << "   ";
             }
         }
         std::cout << std::endl;
+    }
+}
+
+void Grid::stepAllBlocks(f96 deltaTime)
+{
+    for(u32 i = 0; i < WIDTH * HEIGHT; i++)
+    {
+        if(grid[i].exist)
+        {
+            grid[i].step(deltaTime);
+        }
+    }
+}
+
+void Grid::drawBlocks()
+{
+    for(u32 i = 0; i < WIDTH * HEIGHT; i++)
+    {
+        if(grid[i].exist)
+        {
+            grid[i].draw();
+        }
     }
 }

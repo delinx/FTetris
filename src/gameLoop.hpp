@@ -1,6 +1,7 @@
 #ifndef GAME_LOOP_HPP
 #define GAME_LOOP_HPP
 #include "raylib.h"
+#include "types/grid.hpp"
 #include "types/types.hpp"
 #include "types/xy.hpp"
 
@@ -19,11 +20,15 @@ class GameLoop
     i32 rotate = 0;
     bool drop = false;
     bool skipWaiting = false;
-
     void readKeyboard();
     void resetInput();
 
+    // Tetris logic
+    Grid *grid = NULL;
+
     void tickLogic();
+    void tickMovement();
+    void draw();
 
     GameLoop();
     ~GameLoop();

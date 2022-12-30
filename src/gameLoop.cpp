@@ -3,6 +3,7 @@
 
 GameLoop::GameLoop()
 {
+    grid = new Grid(10, 20);
 }
 
 GameLoop::~GameLoop()
@@ -31,7 +32,7 @@ void GameLoop::readKeyboard()
         rotate = -1;
     }
     // drop
-    if(IsKeyPressed(KEY_SPACE))
+    if(IsKeyDown(KEY_SPACE))
     {
         drop = true;
     }
@@ -57,4 +58,24 @@ void GameLoop::tickLogic()
     }
 
     resetInput();
+}
+
+void GameLoop::tickMovement()
+{
+    if(grid == NULL)
+    {
+        return;
+    }
+
+    grid->stepAllBlocks(deltaTime);
+}
+
+void GameLoop::draw()
+{
+    if(grid == NULL)
+    {
+        return;
+    }
+
+    grid->drawBlocks();
 }

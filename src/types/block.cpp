@@ -33,6 +33,7 @@ void Block::updateTaregtPos(iXY targetPos)
 
 void Block::step(f96 deltaTime)
 {
+    updateTaregtPos(bucketPos);
     // check if block needs to be animated
     if(playingAnimation)
     {
@@ -74,4 +75,10 @@ void Block::step(f96 deltaTime)
         }
     }
     print();
+}
+
+void Block::draw()
+{
+    // draw block
+    DrawRectangle(positionVisualCurrent.x + OFFSET.x, positionVisualCurrent.y + OFFSET.y, blockVisualSize, blockVisualSize, BaseColor);
 }

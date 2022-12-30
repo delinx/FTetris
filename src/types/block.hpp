@@ -21,6 +21,7 @@ class Block
     fXY positionVisualCurrent;
     fXY positionVisualTarget;
     f32 movementSpeed = 200.0f;
+    fXY OFFSET = fXY(0.0f, 0.0f);
 
     i32 blockVisualSize = 25;
 
@@ -29,9 +30,11 @@ class Block
     f32 animationTimestampCurrent = 0.0f;
     const f32 animationTimestampEnd = 100.0f;
 
-    f32 animationSpeed = 1.0f;
+    f32 animationSpeed = 100.0f;
 
     Color BaseColor = GREEN;
+
+    void draw();
 
     void print();
     void updateTaregtPos(iXY targetPos);
@@ -46,6 +49,7 @@ class Block
         this->positionVisualCurrent = other.positionVisualCurrent;
         this->positionVisualTarget = other.positionVisualTarget;
         this->movementSpeed = other.movementSpeed;
+        this->OFFSET = other.OFFSET;
         this->blockVisualSize = other.blockVisualSize;
         this->playingAnimation = other.playingAnimation;
         this->deleteAfterAnimating = other.deleteAfterAnimating;
