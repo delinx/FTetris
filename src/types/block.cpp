@@ -6,6 +6,10 @@ Block::Block(fXY visualPos)
     positionVisualTarget = visualPos;
 }
 
+Block::Block()
+{
+}
+
 Block::~Block()
 {
 }

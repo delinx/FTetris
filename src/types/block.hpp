@@ -12,6 +12,8 @@ class Block
     i32 pseudoUniqueID = rand() % 1000;
 
       public:
+    bool exist = false;
+
     i32 BlockType = 1;
     i32 Special = 0;
 
@@ -33,6 +35,24 @@ class Block
     void print();
     void updateTaregtPos(iXY targetPos);
     void step(f96 deltaTime);
+
+    Block& operator=(const Block& other)
+    {
+        this->exist = other.exist;
+        this->BlockType = other.BlockType;
+        this->Special = other.Special;
+        this->positionVisualCurrent = other.positionVisualCurrent;
+        this->positionVisualTarget = other.positionVisualTarget;
+        this->movementSpeed = other.movementSpeed;
+        this->blockVisualSize = other.blockVisualSize;
+        this->playingAnimation = other.playingAnimation;
+        this->deleteAfterAnimating = other.deleteAfterAnimating;
+        this->animationTimestampCurrent = other.animationTimestampCurrent;
+        this->animationSpeed = other.animationSpeed;
+        this->BaseColor = other.BaseColor;
+
+        return *this;
+    }
 
     Block();
     Block(fXY visualPos);

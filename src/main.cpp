@@ -1,5 +1,6 @@
 #include "gameLoop.hpp"
 #include "raylib.h"
+#include "types/grid.hpp"
 #include "types/types.hpp"
 
 #ifdef UNIT_TEST
