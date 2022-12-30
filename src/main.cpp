@@ -12,8 +12,8 @@
 int main(int argc, char *argv[])
 {
 
-    int screenWidth = 800;
-    int screenHeight = 450;
+    int screenWidth = 400;
+    int screenHeight = 600;
 
     InitWindow(screenWidth, screenHeight, "raylib [core] example - basic window");
     SetTargetFPS(120);

@@ -166,11 +166,25 @@ bool GameLoop::canFit(iXY xy)
 
 void GameLoop::drawBackground()
 {
+    bool colorFlipFlop = true;
+    unsigned char shade = 150;
+    unsigned char shade2 = 180;
+    Color color1 = { shade, shade, shade, 255 };
+    Color color2 = { shade2, shade2, shade2, 255 };
     for(i32 x = 0; x < bucket->WIDTH; x++)
     {
         for(i32 y = 0; y < bucket->HEIGHT; y++)
         {
-            DrawRectangle(x * blockSize, y * blockSize, blockSize, blockSize, RED);
+            if(colorFlipFlop)
+            {
+                DrawRectangle(x * blockSize, y * blockSize, blockSize, blockSize, color1);
+            }
+            else
+            {
+                DrawRectangle(x * blockSize, y * blockSize, blockSize, blockSize, color2);
+            }
+            colorFlipFlop = !colorFlipFlop;
         }
+        colorFlipFlop = !colorFlipFlop;
     }
 }

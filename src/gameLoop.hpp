@@ -9,7 +9,7 @@
 class GameLoop
 {
       private:
-    i32 blockSize = 20;
+    i32 blockSize = 30;
 
       public:
     f96 time = 0.0f;

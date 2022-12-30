@@ -23,7 +23,7 @@ class Block
     f32 movementSpeed = 200.0f;
     fXY OFFSET = fXY(0.0f, 0.0f);
 
-    i32 blockVisualSize = 20;
+    i32 blockVisualSize = 30;
 
     bool playingAnimation = false;
     bool deleteAfterAnimating = false;
