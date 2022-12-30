@@ -80,8 +80,8 @@ void Block::step(f96 deltaTime)
             positionVisualCurrent.y = positionVisualTarget.y;
         }
     }
-    std::cout << std::abs(positionVisualCurrent.x - positionVisualTarget.x) << std::endl;
-    // print();
+    // std::cout << std::abs(positionVisualCurrent.x - positionVisualTarget.x) << std::endl;
+    //  print();
 }
 
 void Block::draw()

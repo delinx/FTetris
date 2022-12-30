@@ -20,6 +20,13 @@ int main(int argc, char *argv[])
 
     GameLoop gameLoop;
 
+    Block z;
+    z.exist = true;
+    z.BaseColor = RED;
+    z.bucketPos = iXY(5, 10);
+    z.forceUpdateVisualPos();
+    gameLoop.bucket->set(iXY(5, 10), z);
+
     while(!WindowShouldClose())
     {
         gameLoop.DEBUG = IsKeyReleased(KEY_TAB) ? !gameLoop.DEBUG : gameLoop.DEBUG;

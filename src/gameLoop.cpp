@@ -97,6 +97,7 @@ void GameLoop::tickLogic()
             }
             else
             {
+                // TODO: add counter, if we hit bottom twice in a row, we BAKE
                 std::cout << "can not go DOWN, we hit THE BOTTOM" << std::endl;
             }
         }
