@@ -24,6 +24,9 @@ int main(int argc, char *argv[])
     {
         gameLoop.time += GetFrameTime();
         gameLoop.deltaTime = GetFrameTime();
+        gameLoop.readKeyboard();
+
+        gameLoop.tickLogic();
 
         BeginDrawing();
         ClearBackground(GRAY);

@@ -17,6 +17,7 @@ class Block
     i32 BlockType = 1;
     i32 Special = 0;
 
+    iXY bucketPos;
     fXY positionVisualCurrent;
     fXY positionVisualTarget;
     f32 movementSpeed = 200.0f;
@@ -41,6 +42,7 @@ class Block
         this->exist = other.exist;
         this->BlockType = other.BlockType;
         this->Special = other.Special;
+        this->bucketPos = other.bucketPos;
         this->positionVisualCurrent = other.positionVisualCurrent;
         this->positionVisualTarget = other.positionVisualTarget;
         this->movementSpeed = other.movementSpeed;
