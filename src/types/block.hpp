@@ -38,6 +38,7 @@ class Block
 
     void print();
     void updateTaregtPos(iXY targetPos);
+    void forceUpdateVisualPos();
     void step(f96 deltaTime);
 
     Block& operator=(const Block& other)

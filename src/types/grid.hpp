@@ -7,8 +7,8 @@
 class Grid
 {
       public:
-    u32 WIDTH;
-    u32 HEIGHT;
+    i32 WIDTH;
+    i32 HEIGHT;
     Block* grid;
     fXY OFFSET = fXY(0.0f, 0.0f);
 

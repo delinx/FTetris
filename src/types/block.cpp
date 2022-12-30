@@ -31,6 +31,12 @@ void Block::updateTaregtPos(iXY targetPos)
     positionVisualTarget.y = targetPos.y * blockVisualSize;
 }
 
+void Block::forceUpdateVisualPos()
+{
+    updateTaregtPos(bucketPos);
+    positionVisualCurrent = positionVisualTarget;
+}
+
 void Block::step(f96 deltaTime)
 {
     updateTaregtPos(bucketPos);

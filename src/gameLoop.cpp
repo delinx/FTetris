@@ -57,7 +57,11 @@ void GameLoop::tickLogic()
         shape = new Grid(3, 3);
         for(i32 i = 0; i < shape->WIDTH * shape->HEIGHT; i++)
         {
-            shape->grid[i] = shapeTemplate.shape_L.grid[i];
+            Block tmp = shapeTemplate.shape_L.grid[i];
+            tmp.bucketPos.x = tmp.bucketPos.x + 3;
+            tmp.bucketPos.y = tmp.bucketPos.y - 4;
+            tmp.forceUpdateVisualPos();
+            shape->grid[i] = tmp;
         }
     }
 
@@ -71,6 +75,7 @@ void GameLoop::tickLogic()
                 std::cout << "can move" << std::endl;
                 shape->addVisualOffset({ moveSide, 0 });
                 skipWaiting = true;
+                continuesMoves++;
             }
         }
         // TODO: only skip wait if valid move
@@ -82,12 +87,13 @@ void GameLoop::tickLogic()
         std::cout << "[TICK] - " << std::to_string(time) << " - " << std::endl;
         lastTick = time;
         // check if we skipWaiting, if we did then do not drop down, if we did not then drop down
-        if(!skipWaiting)
+        if(!skipWaiting || continuesMoves > maxContinuesMoves)
         {
             if(canFit(iXY(0, 1)))
             {
                 std::cout << "going DOWN" << std::endl;
                 shape->addVisualOffset({ 0, 1 });
+                continuesMoves = 0;
             }
             else
             {
@@ -149,6 +155,13 @@ bool GameLoop::canFit(iXY xy)
             // if activeBlock is outside grid return false
             i32 _x = shape->get(iXY(x, y)).bucketPos.x;
             i32 _y = shape->get(iXY(x, y)).bucketPos.y;
+            if(bucket != NULL)
+            {
+                if(-3 + 1 >= bucket->HEIGHT)
+                {
+                    std::cout << "y: " << _y << " xy: " << xy.y << std::endl;
+                }
+            }
             if(xy.x + _x < 0 || xy.x + _x >= bucket->WIDTH || xy.y + _y < -4 || xy.y + _y >= bucket->HEIGHT)
             {
                 std::cout << "out of bounds" << std::endl;

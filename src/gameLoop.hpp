@@ -27,6 +27,8 @@ class GameLoop
     bool drop = false;
     void readKeyboard();
     void resetInput();
+    i32 continuesMoves = 0;
+    i32 maxContinuesMoves = 2;
 
     // Tetris logic
     Grid *bucket = NULL;
