@@ -17,6 +17,7 @@ class Grid
 
     void set(iXY xy, Block block);
     Block get(iXY xy);
+    void swap(iXY xy1, iXY xy2);
 
     /// print grid to console
     void print();

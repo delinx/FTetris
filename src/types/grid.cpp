@@ -28,6 +28,13 @@ Block Grid::get(iXY xy)
     return grid[xy.x + WIDTH * xy.y];
 }
 
+void Grid::swap(iXY xy1, iXY xy2)
+{
+    Block temp = grid[xy1.x + WIDTH * xy1.y];
+    grid[xy1.x + WIDTH * xy1.y] = grid[xy2.x + WIDTH * xy2.y];
+    grid[xy2.x + WIDTH * xy2.y] = temp;
+}
+
 void Grid::print()
 {
     for(i32 y = 0; y < HEIGHT; y++)
