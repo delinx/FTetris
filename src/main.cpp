@@ -21,11 +21,9 @@ int main(int argc, char *argv[])
     GameLoop gameLoop;
     Block animationTest;
     animationTest.exist = true;
-    animationTest.playingAnimation = true;
-    animationTest.bucketPos = iXY(0, 0);
-    gameLoop.grid->set({ 5, 5 }, animationTest);
-    gameLoop.grid->set({ 5, 6 }, animationTest);
-    gameLoop.grid->print();
+    animationTest.bucketPos = iXY(1, 1);
+    gameLoop.bucket->set({ 5, 5 }, animationTest);
+    gameLoop.bucket->set({ 5, 6 }, animationTest);
 
     while(!WindowShouldClose())
     {
@@ -47,9 +45,9 @@ int main(int argc, char *argv[])
         if(IsKeyReleased(KEY_TAB))
         {
             gameLoop.DEBUG = !gameLoop.DEBUG;
-            Block tmp = gameLoop.grid->get({ 5, 5 });
+            Block tmp = gameLoop.bucket->get({ 5, 5 });
             tmp.updateTaregtPos({ 6, 5 });
-            gameLoop.grid->set({ 5, 5 }, tmp);
+            gameLoop.bucket->set({ 5, 5 }, tmp);
         }
     }
 

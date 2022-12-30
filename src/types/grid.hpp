@@ -20,6 +20,7 @@ class Grid
     Block get(iXY xy);
     void swap(iXY xy1, iXY xy2);
     void setVisualOffset(fXY offset);
+    void addVisualOffset(iXY offset);
 
     /// print grid to console
     void print();

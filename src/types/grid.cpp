@@ -28,6 +28,18 @@ void Grid::setVisualOffset(fXY offset)
     }
 }
 
+void Grid::addVisualOffset(iXY offset)
+{
+    for(u32 i = 0; i < WIDTH * HEIGHT; i++)
+    {
+        iXY tmp = grid[i].bucketPos;
+        tmp.x += offset.x;
+        tmp.y += offset.y;
+        std::cout << "tmp: " << tmp.x << ", " << tmp.y << std::endl;
+        grid[i].bucketPos = tmp;
+    }
+}
+
 void Grid::set(iXY xy, Block block)
 {
     grid[xy.x + WIDTH * xy.y] = block;

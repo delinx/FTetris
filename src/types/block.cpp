@@ -74,7 +74,7 @@ void Block::step(f96 deltaTime)
             positionVisualTarget.y = positionVisualTarget.y;
         }
     }
-    print();
+    // print();
 }
 
 void Block::draw()
