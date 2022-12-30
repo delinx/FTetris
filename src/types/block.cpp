@@ -60,9 +60,9 @@ void Block::step(f96 deltaTime)
         {
             positionVisualCurrent.x += movementSpeed * deltaTime;
         }
-        if(std::abs(positionVisualCurrent.x - positionVisualTarget.x) < 1.f)
+        if(std::abs(positionVisualCurrent.x - positionVisualTarget.x) < movementSpeed * deltaTime)
         {
-            positionVisualTarget.x = positionVisualTarget.x;
+            positionVisualCurrent.x = positionVisualTarget.x;
         }
     }
     if(positionVisualCurrent.y != positionVisualTarget.y)
@@ -75,11 +75,12 @@ void Block::step(f96 deltaTime)
         {
             positionVisualCurrent.y += movementSpeed * deltaTime;
         }
-        if(std::abs(positionVisualCurrent.y - positionVisualTarget.y) < 1.f)
+        if(std::abs(positionVisualCurrent.y - positionVisualTarget.y) < movementSpeed * deltaTime)
         {
-            positionVisualTarget.y = positionVisualTarget.y;
+            positionVisualCurrent.y = positionVisualTarget.y;
         }
     }
+    std::cout << std::abs(positionVisualCurrent.x - positionVisualTarget.x) << std::endl;
     // print();
 }
 

@@ -16,12 +16,14 @@ int main(int argc, char *argv[])
     int screenHeight = 600;
 
     InitWindow(screenWidth, screenHeight, "raylib [core] example - basic window");
-    SetTargetFPS(120);
+    SetTargetFPS(200);
 
     GameLoop gameLoop;
 
     while(!WindowShouldClose())
     {
+        gameLoop.DEBUG = IsKeyReleased(KEY_TAB) ? !gameLoop.DEBUG : gameLoop.DEBUG;
+
         gameLoop.time += GetFrameTime();
         gameLoop.deltaTime = GetFrameTime();
         gameLoop.readKeyboard();
@@ -31,20 +33,16 @@ int main(int argc, char *argv[])
 
         BeginDrawing();
         ClearBackground(GRAY);
-        DrawFPS(10, 10);
         DrawText("FTetris", 190, 200, 20, LIGHTGRAY);
         gameLoop.drawBackground();
         gameLoop.draw();
-        EndDrawing();
 
-        // debug toggle
-        if(IsKeyReleased(KEY_TAB))
+        if(gameLoop.DEBUG)
         {
-            gameLoop.DEBUG = !gameLoop.DEBUG;
-            Block tmp = gameLoop.bucket->get({ 5, 5 });
-            tmp.updateTaregtPos({ 6, 5 });
-            gameLoop.bucket->set({ 5, 5 }, tmp);
+            DrawFPS(10, 10);
         }
+        // debug toggle
+        EndDrawing();
     }
 
     CloseWindow();
