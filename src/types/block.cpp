@@ -17,8 +17,11 @@ Block::~Block()
 void Block::print()
 {
 
-    std::cout << "\n--- --- --- [" << pseudoUniqueID << "]\n"
-              << "--- *** ---\ncXY: " << positionVisualCurrent.x << ", " << positionVisualCurrent.y << " | "
+    std::cout << "\n--- --- --- [" << pseudoUniqueID << "]\n";
+
+    std::cout << "[" << exist << "]" << bucketPos.x << ":" << bucketPos.y << "\n";
+
+    std::cout << "--- *** ---\ncXY: " << positionVisualCurrent.x << ", " << positionVisualCurrent.y << " | "
               << "gXY: " << positionVisualTarget.x << ", " << positionVisualTarget.y << " (" << movementSpeed << ")\n"
               << "Animation: b" << playingAnimation << " | Del: b" << deleteAfterAnimating << " | " << animationTimestampCurrent
               << " | (" << animationSpeed << ")\n"

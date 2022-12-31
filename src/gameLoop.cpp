@@ -71,6 +71,41 @@ void GameLoop::tickLogic()
                 continuesMoves++;
             }
         }
+        if(rotate != 0 && shape != nullptr)
+        {
+            Grid *rotated = new Grid(shape->WIDTH, shape->HEIGHT);
+
+            // copy shape to rotated shape Grid while rotating
+            // get origin of shape in global space
+            iXY origin = shape->get(iXY(0, 0)).bucketPos;
+            std::cout << "origin: " << origin.x << ", " << origin.y << std::endl;
+
+            for(i32 Sx = 0; Sx < shape->WIDTH; Sx++)
+            {
+                for(i32 Sy = 0; Sy < shape->HEIGHT; Sy++)
+                {
+                    Block block = shape->get(iXY(shape->HEIGHT - 1 - Sy, Sx));
+                    block.bucketPos = iXY(Sx + origin.x, Sy + origin.y);
+                    block.forceUpdateVisualPos();
+                    rotated->set(iXY(Sx, Sy), block);
+                }
+            }
+            // check if rotated shape can fit
+            if(canFit(iXY(0, 0), rotated))
+            {
+                std::cout << "can rotate" << std::endl;
+                for(i32 Sx = 0; Sx < shape->WIDTH; Sx++)
+                {
+                    for(i32 Sy = 0; Sy < shape->HEIGHT; Sy++)
+                    {
+                        shape->set(iXY(Sx, Sy), rotated->get(iXY(Sx, Sy)));
+                    }
+                }
+                skipWaiting = true;
+                continuesMoves++;
+            }
+            delete rotated;
+        }
         // TODO: only skip wait if valid move
         resetInput();
     }
