@@ -35,11 +35,13 @@ class GameLoop
     Grid *shape = NULL;
     iXY shapeXY;
     Shape shapeTemplate;
+    i32 unmovedTicks = 0;
 
     void tickLogic();
     void tickMovement();
     void draw();
     void drawBackground();
+    void bakeShape();
 
     bool canFit(iXY xy);
 

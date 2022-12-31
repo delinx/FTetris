@@ -89,16 +89,26 @@ void GameLoop::tickLogic()
         // check if we skipWaiting, if we did then do not drop down, if we did not then drop down
         if(!skipWaiting || continuesMoves > maxContinuesMoves)
         {
-            if(canFit(iXY(0, 1)))
+            if(shape != NULL)
             {
-                std::cout << "going DOWN" << std::endl;
-                shape->addVisualOffset({ 0, 1 });
-                continuesMoves = 0;
-            }
-            else
-            {
-                // TODO: add counter, if we hit bottom twice in a row, we BAKE
-                std::cout << "can not go DOWN, we hit THE BOTTOM" << std::endl;
+                if(canFit(iXY(0, 1)))
+                {
+                    std::cout << "going DOWN" << std::endl;
+                    shape->addVisualOffset({ 0, 1 });
+                    continuesMoves = 0;
+                    unmovedTicks = 0;
+                }
+                else
+                {
+                    unmovedTicks++;
+                    if(unmovedTicks > 1)
+                    {
+                        bakeShape();
+                        unmovedTicks = 0;
+                    }
+                    // TODO: add counter, if we hit bottom twice in a row, we BAKE
+                    std::cout << "can not go DOWN, we hit THE BOTTOM" << std::endl;
+                }
             }
         }
 
@@ -201,4 +211,24 @@ void GameLoop::drawBackground()
         }
         colorFlipFlop = !colorFlipFlop;
     }
+}
+
+void GameLoop::bakeShape()
+{
+    if(shape == NULL)
+    {
+        return;
+    }
+    for(i32 x = 0; x < shape->WIDTH; x++)
+    {
+        for(i32 y = 0; y < shape->HEIGHT; y++)
+        {
+            if(shape->get(iXY(x, y)).exist)
+            {
+                bucket->set(iXY(shape->get(iXY(x, y)).bucketPos.x, shape->get(iXY(x, y)).bucketPos.y), shape->get(iXY(x, y)));
+            }
+        }
+    }
+    delete shape;
+    shape = NULL;
 }
