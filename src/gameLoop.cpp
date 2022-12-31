@@ -432,11 +432,5 @@ void GameLoop::checkIfReadyToResume()
         inAnimationFreeze = false;
     }
     // TODO: move all the upper lines of x down and update their bucket pos (they should move down in animation)
-    for(i32 y = yOfRemovedRow; y > 0; y--)
-    {
-        for(i32 x = 0; x < bucket->WIDTH; x++)
-        {
-            Block tmp = bucket->get(iXY(x, y));
-        }
-    }
+    // TODO: Figure out removal
 }

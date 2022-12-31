@@ -20,6 +20,7 @@ int main(int argc, char *argv[])
 
     GameLoop gameLoop;
 
+
     while(!WindowShouldClose())
     {
         gameLoop.DEBUG = IsKeyReleased(KEY_TAB) ? !gameLoop.DEBUG : gameLoop.DEBUG;
