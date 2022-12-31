@@ -75,3 +75,10 @@ Shape::Shape()
     block.bucketPos = iXY(2, 2);
     shape_Z.set(iXY(2, 2), block);
 };
+
+Shape::~Shape()
+{
+    std::cout << "XXXXXXXX"
+              << "ShapeTemplate was destroyed, WHY?"
+              << "XXXXXXXX" << std::endl;
+}

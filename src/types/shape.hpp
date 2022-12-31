@@ -1,5 +1,6 @@
 #ifndef SHAPE_HPP
 #define SHAPE_HPP
+#include "block.hpp"
 #include "grid.hpp"
 #include "types.hpp"
 
@@ -13,6 +14,7 @@ struct Shape
     Grid shape_T = Grid(3, 3);
     Grid shape_Z = Grid(3, 3);
     Shape();
+    ~Shape();
 };
 
 #endif  // !SHAPE_HPP

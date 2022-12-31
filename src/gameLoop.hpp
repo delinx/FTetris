@@ -10,6 +10,7 @@ class GameLoop
 {
       private:
     i32 blockSize = 30;
+    void newShape();
 
       public:
     f96 time = 0.0f;
@@ -31,8 +32,8 @@ class GameLoop
     i32 maxContinuesMoves = 2;
 
     // Tetris logic
-    Grid *bucket = NULL;
-    Grid *shape = NULL;
+    Grid *bucket = nullptr;
+    Grid *shape = nullptr;
     iXY shapeXY;
     Shape shapeTemplate;
     i32 unmovedTicks = 0;

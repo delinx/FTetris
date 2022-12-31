@@ -46,29 +46,22 @@ void GameLoop::resetInput()
     drop = false;
 }
 
+
 void GameLoop::tickLogic()
 {
     // icrease tick speed if down is held
     f96 interval = drop ? tickIntervalFast : tickInterval;
 
     // if there is no falling shape and we are not in animation freeze then make new one
-    if(shape == NULL && !inAnimationFreeze)
+    if(shape == nullptr && !inAnimationFreeze)
     {
-        shape = new Grid(3, 3);
-        for(i32 i = 0; i < shape->WIDTH * shape->HEIGHT; i++)
-        {
-            Block tmp = shapeTemplate.shape_L.grid[i];
-            tmp.bucketPos.x = tmp.bucketPos.x + 3;
-            tmp.bucketPos.y = tmp.bucketPos.y - 4;
-            tmp.forceUpdateVisualPos();
-            shape->grid[i] = tmp;
-        }
+        newShape();
     }
 
     bool skipWaiting = false;
     if(moveSide != 0 || rotate != 0 || drop)
     {
-        if(moveSide != 0 && shape != NULL)
+        if(moveSide != 0 && shape != nullptr)
         {
             if(canFit(iXY(moveSide, 0)))
             {
@@ -89,7 +82,7 @@ void GameLoop::tickLogic()
         // check if we skipWaiting, if we did then do not drop down, if we did not then drop down
         if(!skipWaiting || continuesMoves > maxContinuesMoves)
         {
-            if(shape != NULL)
+            if(shape != nullptr)
             {
                 if(canFit(iXY(0, 1)))
                 {
@@ -120,13 +113,13 @@ void GameLoop::tickLogic()
 
 void GameLoop::tickMovement()
 {
-    if(bucket == NULL)
+    if(bucket == nullptr)
     {
         return;
     }
     bucket->stepAllBlocks(deltaTime);
 
-    if(shape == NULL)
+    if(shape == nullptr)
     {
         return;
     }
@@ -135,13 +128,13 @@ void GameLoop::tickMovement()
 
 void GameLoop::draw()
 {
-    if(bucket == NULL)
+    if(bucket == nullptr)
     {
         return;
     }
     bucket->drawBlocks();
 
-    if(shape == NULL)
+    if(shape == nullptr)
     {
         return;
     }
@@ -150,7 +143,7 @@ void GameLoop::draw()
 
 bool GameLoop::canFit(iXY xy)
 {
-    if(bucket == NULL || shape == NULL)
+    if(bucket == nullptr || shape == nullptr)
     {
         return false;
     }
@@ -166,7 +159,7 @@ bool GameLoop::canFit(iXY xy)
             // if activeBlock is outside grid return false
             i32 _x = shape->get(iXY(x, y)).bucketPos.x;
             i32 _y = shape->get(iXY(x, y)).bucketPos.y;
-            if(bucket != NULL)
+            if(bucket != nullptr)
             {
                 if(-3 + 1 >= bucket->HEIGHT)
                 {
@@ -215,7 +208,7 @@ void GameLoop::drawBackground()
 
 void GameLoop::bakeShape()
 {
-    if(shape == NULL)
+    if(shape == nullptr)
     {
         return;
     }
@@ -230,5 +223,44 @@ void GameLoop::bakeShape()
         }
     }
     delete shape;
-    shape = NULL;
+    shape = nullptr;
+}
+
+void GameLoop::newShape()
+{
+    Grid *newShape;
+    switch(rand() % 7)
+    {
+        case 0:
+            newShape = &shapeTemplate.shape_S;
+            break;
+        case 1:
+            newShape = &shapeTemplate.shape_Z;
+            break;
+        case 2:
+            newShape = &shapeTemplate.shape_L;
+            break;
+        case 3:
+            newShape = &shapeTemplate.shape_J;
+            break;
+        case 4:
+            newShape = &shapeTemplate.shape_I;
+            break;
+        case 5:
+            newShape = &shapeTemplate.shape_O;
+            break;
+        case 6:
+            newShape = &shapeTemplate.shape_T;
+            break;
+    }
+
+    shape = new Grid(newShape->WIDTH, newShape->HEIGHT);
+    for(i32 i = 0; i < shape->WIDTH * shape->HEIGHT; i++)
+    {
+        Block tmp = newShape->grid[i];
+        tmp.bucketPos.x = tmp.bucketPos.x + 3;
+        tmp.bucketPos.y = tmp.bucketPos.y - 4;
+        tmp.forceUpdateVisualPos();
+        shape->grid[i] = tmp;
+    }
 }
