@@ -37,6 +37,19 @@ class GameLoop
     iXY shapeXY;
     Shape shapeTemplate;
     i32 unmovedTicks = 0;
+    bool checkSolvedLines();
+    i32 specialChance = 5;  // 1% chance
+    i32 specialRange = 3;   // A B
+
+    // graphics
+    Color clr1 = Color { 100, 201, 211, 255 };
+    Color clr2 = Color { 68, 98, 165, 255 };
+    Color clr3 = Color { 240, 175, 205, 255 };
+    Color clr4 = Color { 230, 230, 70, 255 };
+    Color clr5 = Color { 100, 190, 90, 255 };
+    Color clr6 = Color { 140, 90, 170, 255 };
+    Color clr7 = Color { 230, 65, 55, 255 };
+    Color randomColor();
 
     void tickLogic();
     void tickMovement();

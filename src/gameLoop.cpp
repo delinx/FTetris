@@ -88,14 +88,14 @@ void GameLoop::tickLogic()
                     {
                         Block block = shape->get(iXY(Sy, shape->WIDTH - 1 - Sx));
                         block.bucketPos = iXY(Sx + origin.x, Sy + origin.y);
-                        block.forceUpdateVisualPos();
+                        //  block.forceUpdateVisualPos();
                         rotated->set(iXY(Sx, Sy), block);
                     }
                     else
                     {
                         Block block = shape->get(iXY(shape->HEIGHT - 1 - Sy, Sx));
                         block.bucketPos = iXY(Sx + origin.x, Sy + origin.y);
-                        block.forceUpdateVisualPos();
+                        // block.forceUpdateVisualPos();
                         rotated->set(iXY(Sx, Sy), block);
                     }
                 }
@@ -142,6 +142,12 @@ void GameLoop::tickLogic()
                     if(unmovedTicks > 1)
                     {
                         bakeShape();
+                        // check if we have any lines to clear
+                        if(checkSolvedLines())
+                        {
+                            std::cout << "SOLVED LINES FOUND" << std::endl;
+                        }
+
                         unmovedTicks = 0;
                     }
                     // TODO: add counter, if we hit bottom twice in a row, we BAKE
@@ -307,14 +313,73 @@ void GameLoop::newShape()
             break;
     }
 
+    Color rndColor = randomColor();
     shape = new Grid(newShape->WIDTH, newShape->HEIGHT);
     for(i32 i = 0; i < shape->WIDTH * shape->HEIGHT; i++)
     {
         Block tmp = newShape->grid[i];
         tmp.bucketPos.x = tmp.bucketPos.x + 3;
         tmp.bucketPos.y = tmp.bucketPos.y - 4;
-        tmp.BaseColor = rand() % 2 == 0 ? RED : BLUE;
+        tmp.BaseColor = rndColor;
+        i32 special = rand() % 100;
+        if(special <= specialChance)
+        {
+            std::cout << special << std::endl;
+            tmp.Special = rand() % specialRange + 1;
+        }
+
         tmp.forceUpdateVisualPos();
         shape->grid[i] = tmp;
     }
+}
+
+Color GameLoop::randomColor()
+{
+    Color tmp;
+    switch(rand() % 7)
+    {
+        case 0:
+            tmp = clr1;
+            break;
+        case 1:
+            tmp = clr2;
+            break;
+        case 2:
+            tmp = clr3;
+            break;
+        case 3:
+            tmp = clr4;
+            break;
+        case 4:
+            tmp = clr5;
+            break;
+        case 5:
+            tmp = clr6;
+            break;
+        case 6:
+            tmp = clr7;
+            break;
+    }
+    return tmp;
+}
+
+bool GameLoop::checkSolvedLines()
+{
+    for(i32 y = 0; y < bucket->HEIGHT; y++)
+    {
+        bool solved = true;
+        for(i32 x = 0; x < bucket->WIDTH; x++)
+        {
+            if(!bucket->get(iXY(x, y)).exist)
+            {
+                solved = false;
+                break;
+            }
+        }
+        if(solved)
+        {
+            return true;
+        }
+    }
+    return false;
 }

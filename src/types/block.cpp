@@ -110,9 +110,16 @@ void Block::draw()
                                  (f32)(blockVisualSize),
                              },
                              1.f, DARKGRAY);
-    }
-    else  // TODO: remove this else branch, its just debug visualiser of used to Exist but now !Exist blocks
-    {
-        DrawRectangle(positionVisualCurrent.x + OFFSET.x, positionVisualCurrent.y + OFFSET.y, blockVisualSize, blockVisualSize, Color { 0, 0, 0, 100 });
+
+        // draw special
+        if(Special > 0)
+        {
+            DrawRectangle(posX + 4, posY + 4, blockVisualSize - 8, blockVisualSize - 8, Color { 0, 0, 0, 50 });
+            // DrawText(std::to_string(Special).c_str(), posX + 4, posY + 4, 16, Color { 0, 0, 0, 255 });
+            char sym[2];
+            sym[0] = Special + 64;
+            sym[1] = '\0';
+            DrawText(sym, posX + 9, posY + 6, 20, Color { 255, 255, 255, 255 });
+        }
     }
 }
