@@ -51,6 +51,15 @@ void Block::step(f96 deltaTime)
         {
             animationTimestampCurrent = 100.f;
         }
+
+        if(animationTimestampCurrent == 100.f)
+        {
+            if(deleteAfterAnimating)
+            {
+                exist = false;
+            }
+            // TODO: play sound
+        }
     }
     // check if block needs to be moved in X or Y
     if(positionVisualCurrent.x != positionVisualTarget.x)
@@ -120,6 +129,12 @@ void Block::draw()
             sym[0] = Special + 64;
             sym[1] = '\0';
             DrawText(sym, posX + 9, posY + 6, 20, Color { 255, 255, 255, 255 });
+        }
+        if(playingAnimation)
+        {
+            Color c = Color { 255, 255, 255, 0 };
+            c.a = (u8)(animationTimestampCurrent / 100.f * 255.f);
+            DrawRectangle(posX, posY, blockVisualSize, blockVisualSize, c);
         }
     }
 }

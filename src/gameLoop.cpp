@@ -49,6 +49,13 @@ void GameLoop::resetInput()
 
 void GameLoop::tickLogic()
 {
+
+    if(inAnimationFreeze)
+    {
+        checkIfReadyToResume();
+        return;
+    }
+
     // icrease tick speed if down is held
     f96 interval = drop ? tickIntervalFast : tickInterval;
 
@@ -146,6 +153,8 @@ void GameLoop::tickLogic()
                         if(checkSolvedLines())
                         {
                             std::cout << "SOLVED LINES FOUND" << std::endl;
+                            inAnimationFreeze = true;
+                            removeRow();
                         }
 
                         unmovedTicks = 0;
@@ -382,4 +391,52 @@ bool GameLoop::checkSolvedLines()
         }
     }
     return false;
+}
+
+
+void GameLoop::removeRow()
+{
+    for(i32 y = 0; y < bucket->HEIGHT; y++)
+    {
+        bool solved = true;
+        for(i32 x = 0; x < bucket->WIDTH; x++)
+        {
+            if(!bucket->get(iXY(x, y)).exist)
+            {
+                solved = false;
+                break;
+            }
+        }
+        if(solved)
+        {
+            // mark blocks in row to play delete animation
+            for(i32 rowX = 0; rowX < bucket->WIDTH; rowX++)
+            {
+                Block tmp = bucket->get(iXY(rowX, y));
+                tmp.playingAnimation = true;
+                tmp.deleteAfterAnimating = true;
+                // tmp.inAnimationFreezePtr = inAnimationFreezePtr;
+                //  tmp.animationType = 1;
+                bucket->set(iXY(rowX, y), tmp);
+            }
+            yOfRemovedRow = y;
+        }
+    }
+}
+
+void GameLoop::checkIfReadyToResume()
+{
+    Block tmp = bucket->get(iXY(0, yOfRemovedRow));
+    if(!tmp.exist)
+    {
+        inAnimationFreeze = false;
+    }
+    // TODO: move all the upper lines of x down and update their bucket pos (they should move down in animation)
+    for(i32 y = yOfRemovedRow; y > 0; y--)
+    {
+        for(i32 x = 0; x < bucket->WIDTH; x++)
+        {
+            Block tmp = bucket->get(iXY(x, y));
+        }
+    }
 }

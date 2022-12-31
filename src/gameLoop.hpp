@@ -40,6 +40,9 @@ class GameLoop
     bool checkSolvedLines();
     i32 specialChance = 5;  // 1% chance
     i32 specialRange = 3;   // A B
+    void removeRow();
+    i32 yOfRemovedRow = 0;
+    void checkIfReadyToResume();
 
     // graphics
     Color clr1 = Color { 100, 201, 211, 255 };
