@@ -84,10 +84,20 @@ void GameLoop::tickLogic()
             {
                 for(i32 Sy = 0; Sy < shape->HEIGHT; Sy++)
                 {
-                    Block block = shape->get(iXY(shape->HEIGHT - 1 - Sy, Sx));
-                    block.bucketPos = iXY(Sx + origin.x, Sy + origin.y);
-                    block.forceUpdateVisualPos();
-                    rotated->set(iXY(Sx, Sy), block);
+                    if(rotate > 0)
+                    {
+                        Block block = shape->get(iXY(Sy, shape->WIDTH - 1 - Sx));
+                        block.bucketPos = iXY(Sx + origin.x, Sy + origin.y);
+                        block.forceUpdateVisualPos();
+                        rotated->set(iXY(Sx, Sy), block);
+                    }
+                    else
+                    {
+                        Block block = shape->get(iXY(shape->HEIGHT - 1 - Sy, Sx));
+                        block.bucketPos = iXY(Sx + origin.x, Sy + origin.y);
+                        block.forceUpdateVisualPos();
+                        rotated->set(iXY(Sx, Sy), block);
+                    }
                 }
             }
             // check if rotated shape can fit
@@ -303,6 +313,7 @@ void GameLoop::newShape()
         Block tmp = newShape->grid[i];
         tmp.bucketPos.x = tmp.bucketPos.x + 3;
         tmp.bucketPos.y = tmp.bucketPos.y - 4;
+        tmp.BaseColor = rand() % 2 == 0 ? RED : BLUE;
         tmp.forceUpdateVisualPos();
         shape->grid[i] = tmp;
     }
