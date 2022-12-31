@@ -45,6 +45,7 @@ class GameLoop
     void bakeShape();
 
     bool canFit(iXY xy);
+    bool canFit(iXY xy, Grid *_shape);
 
     GameLoop();
     ~GameLoop();

@@ -141,24 +141,30 @@ void GameLoop::draw()
     shape->drawBlocks();
 }
 
+
 bool GameLoop::canFit(iXY xy)
 {
-    if(bucket == nullptr || shape == nullptr)
+    return canFit(xy, shape);
+}
+
+bool GameLoop::canFit(iXY xy, Grid *_shape)
+{
+    if(bucket == nullptr || _shape == nullptr)
     {
         return false;
     }
-    for(i32 x = 0; x < shape->WIDTH; x++)
+    for(i32 x = 0; x < _shape->WIDTH; x++)
     {
-        for(i32 y = 0; y < shape->HEIGHT; y++)
+        for(i32 y = 0; y < _shape->HEIGHT; y++)
         {
             // if activeBlock cell is empty skip
-            if(!shape->get(iXY(x, y)).exist)
+            if(!_shape->get(iXY(x, y)).exist)
             {
                 continue;
             }
             // if activeBlock is outside grid return false
-            i32 _x = shape->get(iXY(x, y)).bucketPos.x;
-            i32 _y = shape->get(iXY(x, y)).bucketPos.y;
+            i32 _x = _shape->get(iXY(x, y)).bucketPos.x;
+            i32 _y = _shape->get(iXY(x, y)).bucketPos.y;
             if(bucket != nullptr)
             {
                 if(-3 + 1 >= bucket->HEIGHT)
@@ -180,6 +186,8 @@ bool GameLoop::canFit(iXY xy)
     }
     return true;
 }
+
+
 
 void GameLoop::drawBackground()
 {
