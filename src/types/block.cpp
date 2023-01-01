@@ -52,11 +52,12 @@ void Block::step(f96 deltaTime)
             animationTimestampCurrent = 100.f;
         }
 
-        if(animationTimestampCurrent == 100.f)
+        if(animationTimestampCurrent == 100.f && deleteAfterAnimating)
         {
-            if(deleteAfterAnimating)
+            if(bucketPos.x == 12 && bucketPos.y == 0 && positionVisualCurrent.y == positionVisualTarget.y)
             {
                 exist = false;
+                playingAnimation = false;
             }
             // TODO: play sound
         }
@@ -132,7 +133,7 @@ void Block::draw()
         }
         if(playingAnimation)
         {
-            Color c = Color { 255, 255, 255, 0 };
+            Color c = Color { 255, 215, 0, 0 };
             c.a = (u8)(animationTimestampCurrent / 100.f * 255.f);
             DrawRectangle(posX, posY, blockVisualSize, blockVisualSize, c);
         }
@@ -141,6 +142,6 @@ void Block::draw()
     {
         i32 posX = positionVisualCurrent.x + OFFSET.x;
         i32 posY = positionVisualCurrent.y + OFFSET.y;
-        DrawRectangle(posX, posY, blockVisualSize, blockVisualSize, { 0, 0, 0, 150 });
+        // DrawRectangle(posX, posY, blockVisualSize, blockVisualSize, { 0, 0, 0, 150 });
     }
 }

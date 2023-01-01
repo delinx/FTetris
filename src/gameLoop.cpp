@@ -421,6 +421,9 @@ void GameLoop::removeRow()
             {
                 Block tmp = bucket->get(iXY(rowX, y));
                 tmp.playingAnimation = true;
+                tmp.bucketPos.y = 0;
+                tmp.bucketPos.x = 12;
+                tmp.movementSpeed = float((rand() % 200) + 400);
                 tmp.deleteAfterAnimating = true;
                 // tmp.inAnimationFreezePtr = inAnimationFreezePtr;
                 //  tmp.animationType = 1;
