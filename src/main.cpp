@@ -60,8 +60,21 @@ int main(int argc, char *argv[])
         gameLoop.drawBackground();
         gameLoop.draw();
 
+
+        if(gameLoop.lost)
+        {
+            DrawRectangle(0, 0, 500, 600, Color { 0, 0, 0, 100 });
+            DrawText("Game Over", 90, 200, 60, RED);
+            DrawText("Press [ENTER] to play again", 30, 300, 28, WHITE);
+            if(IsKeyReleased(KEY_ENTER))
+            {
+                gameLoop.newGame();
+            }
+        }
+
         gameLoop.tickScore();
         gameLoop.drawScore();
+
         if(gameLoop.DEBUG)
         {
             DrawFPS(10, 10);

@@ -10,16 +10,21 @@ GameLoop::GameLoop()
     {
         for(i32 y = 0; y < bucket->HEIGHT; y++)
         {
-            std::cout << " Y: " << bucket->get({ x, y }).bucketPos.y << std::endl;
+            // std::cout << " Y: " << bucket->get({ x, y }).bucketPos.y << std::endl;
         }
     }
 
     InitAudioDevice();
     sfx_coin = LoadSound("sfx_coin.wav");
-    SetSoundVolume(sfx_coin, 0.5f);
+    SetSoundVolume(sfx_coin, 0.8f);
     sfx_coinPre = LoadSound("sfx_coinPre.wav");
+    SetSoundVolume(sfx_coinPre, 4.0f);
     sfx_fall = LoadSound("sfx_fall.wav");
+    SetSoundVolume(sfx_fall, 1.5f);
     sfx_coinLowPitch = LoadSound("sfx_coin_lowPitch.wav");
+    sfx_lost = LoadSound("sfx_lost.wav");
+
+    PlaySound(sfx_coin);
 }
 
 GameLoop::~GameLoop()
@@ -64,6 +69,12 @@ void GameLoop::resetInput()
 
 void GameLoop::tickLogic()
 {
+    checkIfLost();
+
+    if(lost)
+    {
+        return;
+    }
 
     if(inAnimationFreeze)
     {
@@ -161,7 +172,6 @@ void GameLoop::tickLogic()
             {
                 if(canFit(iXY(0, 1)))
                 {
-                    std::cout << "going DOWN" << std::endl;
                     shape->addVisualOffset({ 0, 1 });
                     continuesMoves = 0;
                     unmovedTicks = 0;
@@ -187,10 +197,8 @@ void GameLoop::tickLogic()
                 }
             }
         }
-
         resetInput();
     }
-
     resetInput();
 }
 
@@ -512,8 +520,6 @@ void GameLoop::tickScore()
     {
         if(time - lastScoreTick > tickScoreInterval)
         {
-            std::cout << "currentScore " << currentScore << std::endl;
-            std::cout << "finalScore " << finalScore << std::endl;
             lastScoreTick = time;
             currentScore += 5;
             if(currentScore % 150 == 0)
@@ -545,4 +551,43 @@ void GameLoop::drawScore()
     u8 number_of_zeros = 8 - s.length();  // add 2 zeros
     s.insert(0, number_of_zeros, '0');
     DrawText(s.c_str(), 305, 5, 40, GOLD);
+}
+
+
+void GameLoop::checkIfLost()
+{
+    if(lost)
+    {
+        return;
+    }
+    for(i32 x = 0; x < bucket->WIDTH; x++)
+    {
+        if(bucket->get(iXY(x, 0)).exist)
+        {
+            std::cout << "lost" << std::endl;
+            lost = true;
+            PlaySound(sfx_lost);
+            break;
+            // PlaySoundMulti(sfx_lose);
+        }
+    }
+}
+
+
+void GameLoop::newGame()
+{
+    delete bucket;
+    delete shape;
+    bucket = nullptr;
+    shape = nullptr;
+    bucket = new Grid(10, 20);
+    currentScore = 0;
+    finalScore = 0;
+    lost = false;
+    inAnimationFreeze = false;
+    resetInput();
+    continuesMoves = 0;
+    unmovedTicks = 0;
+    blocksStillAnimating = 0;
+    PlaySound(sfx_coin);
 }

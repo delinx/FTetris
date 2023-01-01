@@ -34,7 +34,6 @@ class GameLoop
     // Tetris logic
     Grid *bucket = nullptr;
     Grid *shape = nullptr;
-    iXY shapeXY;
     Shape shapeTemplate;
     i32 unmovedTicks = 0;
     bool checkSolvedLines();
@@ -42,8 +41,12 @@ class GameLoop
     i32 specialRange = 4;    // A B C
     void animateRemovedRows();
     void moveRowsDown();
-    i32 yOfRemovedRow = 0;
     void checkIfReadyToResume();
+    bool lost = false;
+    void checkIfLost();
+
+    // new game
+    void newGame();
 
     // graphics
     Color clr1 = Color { 100, 201, 211, 255 };
@@ -61,6 +64,7 @@ class GameLoop
     Sound sfx_coinPre;
     Sound sfx_fall;
     Sound sfx_coinLowPitch;
+    Sound sfx_lost;
 
     // score counter
     i128 currentScore = 0;
