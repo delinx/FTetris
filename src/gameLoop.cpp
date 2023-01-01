@@ -317,6 +317,11 @@ void GameLoop::bakeShape()
         {
             if(shape->get(iXY(x, y)).exist)
             {
+                if(shape->get(iXY(x, y)).bucketPos.y < 0)
+                {
+                    lost = true;
+                    return;
+                }
                 bucket->set(iXY(shape->get(iXY(x, y)).bucketPos.x, shape->get(iXY(x, y)).bucketPos.y), shape->get(iXY(x, y)));
             }
         }
