@@ -486,7 +486,7 @@ void GameLoop::moveRowsDown()
         if(solved)
         {
             // move all blocks above down
-            for(i32 remainingRows = y; remainingRows > 1; remainingRows--)
+            for(i32 remainingRows = y; remainingRows > 0; remainingRows--)
             {
                 for(i32 x = 0; x < bucket->WIDTH; x++)
                 {
