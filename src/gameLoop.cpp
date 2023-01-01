@@ -320,6 +320,7 @@ void GameLoop::bakeShape()
                 if(shape->get(iXY(x, y)).bucketPos.y < 0)
                 {
                     lost = true;
+                    PlaySound(sfx_lost);
                     return;
                 }
                 bucket->set(iXY(shape->get(iXY(x, y)).bucketPos.x, shape->get(iXY(x, y)).bucketPos.y), shape->get(iXY(x, y)));
@@ -553,9 +554,13 @@ void GameLoop::tickScore()
 void GameLoop::drawScore()
 {
     std::string s = std::to_string(currentScore);
-    u8 number_of_zeros = 8 - s.length();  // add 2 zeros
-    s.insert(0, number_of_zeros, '0');
+    s.insert(0, 8 - s.length(), '0');
     DrawText(s.c_str(), 305, 5, 40, GOLD);
+
+    std::string hs = std::to_string(HighScore);
+    hs.insert(0, 8 - hs.length(), '0');
+    DrawText("High Score", 420, 50, 10, WHITE);
+    DrawText(hs.c_str(), 400, 60, 20, WHITE);
 }
 
 
@@ -586,6 +591,10 @@ void GameLoop::newGame()
     bucket = nullptr;
     shape = nullptr;
     bucket = new Grid(10, 20);
+    if(finalScore > HighScore)
+    {
+        HighScore = finalScore;
+    }
     currentScore = 0;
     finalScore = 0;
     lost = false;

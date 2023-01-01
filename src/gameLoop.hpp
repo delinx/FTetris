@@ -77,6 +77,7 @@ class GameLoop
     const f96 scoreSondPitchStep = 0.02f;
     const f96 scoreSoundPitchDefault = 1.0f;
     const f96 scoreSoundPitchMax = 2.0f;
+    i128 HighScore = 0;
 
     void tickLogic();
     void tickMovement();

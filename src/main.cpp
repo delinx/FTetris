@@ -55,10 +55,13 @@ int main(int argc, char *argv[])
         gameLoop.tickMovement();
 
         BeginDrawing();
-        ClearBackground(GRAY);
-        DrawText("FTetris", 190, 200, 20, LIGHTGRAY);
+        ClearBackground(BLACK);
         gameLoop.drawBackground();
         gameLoop.draw();
+
+        // draw hints and controls
+        DrawText("* SCORE *\n [ ] +50 x ROW\n A +400\n B +800 \n C +1200", 330, 220, 20, LIGHTGRAY);
+        DrawText("* CONTROLS *\n[<] [>] \n - MOVE\nUP/DOWN\n - ROTATION\n[SPACE]\n - 4X SPEED", 330, 390, 20, GRAY);
 
 
         if(gameLoop.lost)
