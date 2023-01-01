@@ -56,6 +56,9 @@ class GameLoop
     Color randomColor();
     i32 blocksStillAnimating = 0;
 
+    // sounds
+    Sound sfx_coin;
+
     void tickLogic();
     void tickMovement();
     void draw();

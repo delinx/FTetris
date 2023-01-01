@@ -70,6 +70,12 @@ void Block::step(f96 deltaTime)
                 {
                     std::cout << "Block [" << pseudoUniqueID << "] finished animating and will be deleted now. (blocksStillAnimatingPtr: nullptr)\n";
                 }
+
+                // sound
+                if(sfx_coin != nullptr)
+                {
+                    PlaySoundMulti(*sfx_coin);
+                }
             }
             // TODO: play sound
         }

@@ -12,6 +12,9 @@ GameLoop::GameLoop()
             std::cout << " Y: " << bucket->get({ x, y }).bucketPos.y << std::endl;
         }
     }
+
+    InitAudioDevice();
+    sfx_coin = LoadSound("sfx_coin.wav");
 }
 
 GameLoop::~GameLoop()
@@ -438,6 +441,7 @@ void GameLoop::animateRemovedRows()
                 // counter to know when all blocks finished animating
                 blocksStillAnimating += 1;
                 tmp.blocksStillAnimatingPtr = &blocksStillAnimating;
+                tmp.sfx_coin = &sfx_coin;
                 bucket->set(iXY(rowX, y), tmp);
             }
         }

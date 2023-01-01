@@ -49,6 +49,9 @@ class Block
     void forceUpdateVisualPos();
     void step(f96 deltaTime);
 
+    // Sounds
+    Sound* sfx_coin = nullptr;
+
     Block& operator=(const Block& other)
     {
         this->visible = other.visible;
@@ -67,6 +70,9 @@ class Block
         this->blocksStillAnimatingPtr = other.blocksStillAnimatingPtr;
         this->animationSpeed = other.animationSpeed;
         this->BaseColor = other.BaseColor;
+
+        // sounds
+        this->sfx_coin = other.sfx_coin;
 
         return *this;
     }
