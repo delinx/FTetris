@@ -12,6 +12,11 @@ class Block
     i32 pseudoUniqueID = rand() % 1000;
 
       public:
+    // deletion animation, where we have to set visibility off without affecting exist
+    // some logic relies on exist state, but there are cases, like at the end of
+    // while blocks are being cleaned up
+    bool visible = true;
+
     bool exist = false;
 
     i32 BlockType = 1;
@@ -46,6 +51,7 @@ class Block
 
     Block& operator=(const Block& other)
     {
+        this->visible = other.visible;
         this->exist = other.exist;
         this->BlockType = other.BlockType;
         this->Special = other.Special;

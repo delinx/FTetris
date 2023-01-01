@@ -60,8 +60,15 @@ void GameLoop::tickLogic()
     if(inAnimationFreeze)
     {
         // if there is no unsolved lines left, unfreeze
-        if(!checkSolvedLines())
-            return;
+        if(blocksStillAnimating <= 0)
+        {
+            blocksStillAnimating = 0;
+            while(checkSolvedLines())
+            {
+                moveRowsDown();
+            }
+            inAnimationFreeze = false;
+        }
     }
 
     // icrease tick speed if down is held
@@ -480,19 +487,4 @@ void GameLoop::moveRowsDown()
             }
         }
     }
-}
-
-void GameLoop::checkIfReadyToResume()
-{
-    // TOFIX: Bad check, does not work
-    Block tmp = bucket->get(iXY(0, yOfRemovedRow));
-    if(!tmp.exist)
-    {
-        inAnimationFreeze = false;
-    }
-    // TODO: move all the upper lines of x down and update their bucket pos (they should move down in animation)
-    // TODO: Figure out removal
-    //
-    // We need to check if we are done playing animation
-    // and if we are then call removeRow() again
 }

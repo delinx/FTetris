@@ -57,7 +57,8 @@ void Block::step(f96 deltaTime)
         {
             if(positionVisualCurrent.y == positionVisualTarget.y)
             {
-                exist = false;
+                // exist = false;
+                visible = false;
                 playingAnimation = false;
                 if(blocksStillAnimatingPtr != nullptr)
                 {
@@ -110,7 +111,7 @@ void Block::step(f96 deltaTime)
 
 void Block::draw()
 {
-    if(exist)
+    if(exist && visible)
     {
         // draw block
         i32 posX = positionVisualCurrent.x + OFFSET.x;
