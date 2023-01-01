@@ -63,6 +63,10 @@ int main(int argc, char *argv[])
         if(gameLoop.DEBUG)
         {
             DrawFPS(10, 10);
+            if(gameLoop.inAnimationFreeze)
+            {
+                DrawText("inAnimationFreeze", 10, 30, 20, RED);
+            }
         }
         // debug toggle
         EndDrawing();

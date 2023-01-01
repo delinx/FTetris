@@ -161,7 +161,7 @@ void GameLoop::tickLogic()
                         {
                             std::cout << "SOLVED LINES FOUND" << std::endl;
                             inAnimationFreeze = true;
-                            removeRow();
+                            animateRemovedRows();
                         }
 
                         unmovedTicks = 0;
@@ -401,7 +401,7 @@ bool GameLoop::checkSolvedLines()
 }
 
 
-void GameLoop::removeRow()
+void GameLoop::animateRemovedRows()
 {
     for(i32 y = 0; y < bucket->HEIGHT; y++)
     {
@@ -430,13 +430,40 @@ void GameLoop::removeRow()
                 bucket->set(iXY(rowX, y), tmp);
                 // TODO: Make them fly towards score
             }
+            // move all blocks above down
             yOfRemovedRow = y;
+            for(i32 remainingRows = y; remainingRows > 1; remainingRows--)
+            {
+                for(i32 x = 0; x < bucket->WIDTH; x++)
+                {
+                    // copy block above into temporary var
+                    Block tmp = bucket->get(iXY(x, remainingRows - 1));
+                    if(tmp.exist)
+                    {
+                        // std::cout << "moving block " << x << " " << remainingRows - 1 << std::endl;
+                        tmp.bucketPos.y = remainingRows;
+                        bucket->set(iXY(x, remainingRows), tmp);
+                    }
+                    else
+                    {
+                        // std::cout << "block does not exist " << x << " " << remainingRows - 1 << std::endl;
+                        // but the same block in place, just disable visablility
+                        Block emptyBlock;
+                        emptyBlock.exist = false;
+                        emptyBlock.bucketPos.x = x;
+                        emptyBlock.bucketPos.y = remainingRows;
+                        emptyBlock.forceUpdateVisualPos();
+                        bucket->set(iXY(x, remainingRows), emptyBlock);
+                    }
+                }
+            }
         }
     }
 }
 
 void GameLoop::checkIfReadyToResume()
 {
+    // TOFIX: Bad check, does not work
     Block tmp = bucket->get(iXY(0, yOfRemovedRow));
     if(!tmp.exist)
     {
@@ -444,4 +471,7 @@ void GameLoop::checkIfReadyToResume()
     }
     // TODO: move all the upper lines of x down and update their bucket pos (they should move down in animation)
     // TODO: Figure out removal
+    //
+    // We need to check if we are done playing animation
+    // and if we are then call removeRow() again
 }

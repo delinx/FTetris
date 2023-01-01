@@ -40,7 +40,8 @@ class GameLoop
     bool checkSolvedLines();
     i32 specialChance = 5;  // 1% chance
     i32 specialRange = 3;   // A B
-    void removeRow();
+    void animateRemovedRows();
+    void moveRowsDown();
     i32 yOfRemovedRow = 0;
     void checkIfReadyToResume();
 
