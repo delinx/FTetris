@@ -15,33 +15,10 @@ int main(int argc, char *argv[])
     int screenWidth = 500;
     int screenHeight = 600;
 
-    InitWindow(screenWidth, screenHeight, "raylib [core] example - basic window");
+    InitWindow(screenWidth, screenHeight, "Minigame 3 - Mihails Mozajevs");
     SetTargetFPS(200);
 
     GameLoop gameLoop;
-
-    Block block1;
-    block1.exist = true;
-    block1.bucketPos = { 0, 19 };
-    block1.forceUpdateVisualPos();
-    block1.BaseColor = RED;
-    gameLoop.bucket->set({ 0, 19 }, block1);
-    block1.bucketPos = { 1, 19 };
-    gameLoop.bucket->set({ 1, 19 }, block1);
-    block1.bucketPos = { 2, 19 };
-    gameLoop.bucket->set({ 2, 19 }, block1);
-    block1.bucketPos = { 3, 19 };
-    gameLoop.bucket->set({ 3, 19 }, block1);
-    block1.bucketPos = { 4, 19 };
-    gameLoop.bucket->set({ 4, 19 }, block1);
-    block1.bucketPos = { 6, 19 };
-    gameLoop.bucket->set({ 6, 19 }, block1);
-    block1.bucketPos = { 7, 19 };
-    gameLoop.bucket->set({ 7, 19 }, block1);
-    block1.bucketPos = { 8, 19 };
-    gameLoop.bucket->set({ 8, 19 }, block1);
-    block1.bucketPos = { 9, 19 };
-    gameLoop.bucket->set({ 9, 19 }, block1);
 
     while(!WindowShouldClose())
     {

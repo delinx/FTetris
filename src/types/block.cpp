@@ -130,7 +130,7 @@ void Block::step(f96 deltaTime)
 
 void Block::draw()
 {
-    if(exist && visible)
+    if(exist)
     {
         // draw block
         i32 posX = positionVisualCurrent.x + OFFSET.x;
@@ -173,6 +173,6 @@ void Block::draw()
     {
         i32 posX = positionVisualCurrent.x + OFFSET.x;
         i32 posY = positionVisualCurrent.y + OFFSET.y;
-        // DrawRectangle(posX, posY, blockVisualSize, blockVisualSize, { 0, 0, 0, 150 });
+        // DrawRectangle(posX, posY, blockVisualSize, blockVisualSize, { 0, 0, 0, 100 });
     }
 }

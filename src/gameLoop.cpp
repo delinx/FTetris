@@ -256,19 +256,17 @@ bool GameLoop::canFit(iXY xy, Grid *_shape)
             // if activeBlock is outside grid return false
             i32 _x = _shape->get(iXY(x, y)).bucketPos.x;
             i32 _y = _shape->get(iXY(x, y)).bucketPos.y;
-            if(bucket != nullptr)
-            {
-                if(-3 + 1 >= bucket->HEIGHT)
-                {
-                    std::cout << "y: " << _y << " xy: " << xy.y << std::endl;
-                }
-            }
             if(xy.x + _x < 0 || xy.x + _x >= bucket->WIDTH || xy.y + _y < -4 || xy.y + _y >= bucket->HEIGHT)
             {
+                std::cout << _y << " - " << xy.y << " - " << bucket->HEIGHT << std::endl;
                 std::cout << "out of bounds" << std::endl;
-                return false;
+                if(_y < 20 && _y > -5)
+                {
+                    std::cout << "this _y was allowed through" << std::endl;
+                    return false;
+                }
             }
-            if(bucket->get(iXY(xy.x + _x, xy.y + _y)).exist)
+            if(bucket->get(iXY(xy.x + _x, xy.y + _y)).exist && _y >= 0 && _y < 20)
             {
                 std::cout << "collision" << std::endl;
                 return false;
@@ -317,7 +315,7 @@ void GameLoop::bakeShape()
         {
             if(shape->get(iXY(x, y)).exist)
             {
-                if(shape->get(iXY(x, y)).bucketPos.y < 0)
+                if(shape->get(iXY(x, y)).bucketPos.y < -1)
                 {
                     lost = true;
                     PlaySound(sfx_lost);
@@ -337,25 +335,25 @@ void GameLoop::newShape()
     switch(rand() % 7)
     {
         case 0:
-            newShape = &shapeTemplate.shape_S;
+            newShape = shapeTemplate.shape_S;
             break;
         case 1:
-            newShape = &shapeTemplate.shape_Z;
+            newShape = shapeTemplate.shape_Z;
             break;
         case 2:
-            newShape = &shapeTemplate.shape_L;
+            newShape = shapeTemplate.shape_L;
             break;
         case 3:
-            newShape = &shapeTemplate.shape_J;
+            newShape = shapeTemplate.shape_J;
             break;
         case 4:
-            newShape = &shapeTemplate.shape_I;
+            newShape = shapeTemplate.shape_I;
             break;
         case 5:
-            newShape = &shapeTemplate.shape_O;
+            newShape = shapeTemplate.shape_O;
             break;
         case 6:
-            newShape = &shapeTemplate.shape_T;
+            newShape = shapeTemplate.shape_T;
             break;
     }
 
@@ -364,6 +362,7 @@ void GameLoop::newShape()
     for(i32 i = 0; i < shape->WIDTH * shape->HEIGHT; i++)
     {
         Block tmp = newShape->grid[i];
+        tmp.visible = true;
         tmp.bucketPos.x = tmp.bucketPos.x + 3;
         tmp.bucketPos.y = tmp.bucketPos.y - 4;
         tmp.BaseColor = rndColor;
@@ -572,7 +571,7 @@ void GameLoop::checkIfLost()
     }
     for(i32 x = 0; x < bucket->WIDTH; x++)
     {
-        if(bucket->get(iXY(x, 0)).exist)
+        if(bucket->get(iXY(x, 0)).exist && bucket->get(iXY(x, 0)).bucketPos.x == x && bucket->get(iXY(x, 0)).bucketPos.y == 0)
         {
             std::cout << "lost" << std::endl;
             lost = true;
