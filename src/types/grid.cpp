@@ -5,12 +5,18 @@ Grid::Grid(u32 width, u32 height)
     WIDTH = width;
     HEIGHT = height;
     grid = new Block[WIDTH * HEIGHT];
-    for(u32 i = 0; i < WIDTH * HEIGHT; i++)
+
+    for(i32 x = 0; x < WIDTH; x++)
     {
-        Block block;
-        block.exist = false;
-        block.OFFSET = OFFSET;
-        grid[i] = block;
+        for(i32 y = 0; y < HEIGHT; y++)
+        {
+            Block block;
+            block.exist = false;
+            block.OFFSET = OFFSET;
+            block.bucketPos = { x, y };
+            block.forceUpdateVisualPos();
+            set({ x, y }, block);
+        }
     }
 }
 

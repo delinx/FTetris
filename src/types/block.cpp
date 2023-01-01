@@ -137,4 +137,10 @@ void Block::draw()
             DrawRectangle(posX, posY, blockVisualSize, blockVisualSize, c);
         }
     }
+    else
+    {
+        i32 posX = positionVisualCurrent.x + OFFSET.x;
+        i32 posY = positionVisualCurrent.y + OFFSET.y;
+        DrawRectangle(posX, posY, blockVisualSize, blockVisualSize, { 0, 0, 0, 150 });
+    }
 }

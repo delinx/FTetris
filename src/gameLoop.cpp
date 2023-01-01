@@ -5,6 +5,13 @@
 GameLoop::GameLoop()
 {
     bucket = new Grid(10, 20);
+    for(i32 x = 0; x < bucket->WIDTH; x++)
+    {
+        for(i32 y = 0; y < bucket->HEIGHT; y++)
+        {
+            std::cout << " Y: " << bucket->get({ x, y }).bucketPos.y << std::endl;
+        }
+    }
 }
 
 GameLoop::~GameLoop()
@@ -418,6 +425,7 @@ void GameLoop::removeRow()
                 // tmp.inAnimationFreezePtr = inAnimationFreezePtr;
                 //  tmp.animationType = 1;
                 bucket->set(iXY(rowX, y), tmp);
+                // TODO: Make them fly towards score
             }
             yOfRemovedRow = y;
         }
