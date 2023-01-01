@@ -266,10 +266,13 @@ bool GameLoop::canFit(iXY xy, Grid *_shape)
                     return false;
                 }
             }
-            if(bucket->get(iXY(xy.x + _x, xy.y + _y)).exist && _y >= 0 && _y < 20)
+            if(_y >= 0 && _y < 20 && _x >= 0 && _x < 10)
             {
-                std::cout << "collision" << std::endl;
-                return false;
+                if(bucket->get(iXY(xy.x + _x, xy.y + _y)).exist)
+                {
+                    std::cout << "collision" << std::endl;
+                    return false;
+                }
             }
         }
     }
@@ -319,8 +322,16 @@ void GameLoop::bakeShape()
                 {
                     lost = true;
                     PlaySound(sfx_lost);
+                    delete shape;
+                    shape = nullptr;
                     return;
                 }
+                std::cout << "baking shape" << std::endl;
+                std::cout << shape->get(iXY(x, y)).bucketPos.x << " - " << shape->get(iXY(x, y)).bucketPos.y << std::endl;
+                std::cout << shape->get(iXY(x, y)).exist << std::endl;
+                std::cout << std::to_string(shape->get(iXY(x, y)).BaseColor.r) << std::to_string(shape->get(iXY(x, y)).BaseColor.g) << std::to_string(shape->get(iXY(x, y)).BaseColor.b) << std::endl;
+                std::cout << shape->get(iXY(x, y)).deleteAfterAnimating << std::endl;
+                shape->get(iXY(x, y)).print();
                 bucket->set(iXY(shape->get(iXY(x, y)).bucketPos.x, shape->get(iXY(x, y)).bucketPos.y), shape->get(iXY(x, y)));
             }
         }
@@ -359,7 +370,7 @@ void GameLoop::newShape()
 
     Color rndColor = randomColor();
     shape = new Grid(newShape->WIDTH, newShape->HEIGHT);
-    for(i32 i = 0; i < shape->WIDTH * shape->HEIGHT; i++)
+    for(i32 i = 0; i < newShape->WIDTH * newShape->HEIGHT; i++)
     {
         Block tmp = newShape->grid[i];
         tmp.visible = true;
@@ -374,6 +385,8 @@ void GameLoop::newShape()
         }
 
         tmp.forceUpdateVisualPos();
+        std::cout << "assigning new shape block" << std::endl;
+        tmp.print();
         shape->grid[i] = tmp;
     }
 }
@@ -464,7 +477,7 @@ void GameLoop::animateRemovedRows()
                 tmp.sfx_coin = &sfx_coin;
                 bucket->set(iXY(rowX, y), tmp);
             }
-            PlaySoundMulti(sfx_coinPre);
+            PlaySound(sfx_coinPre);
         }
     }
 }
