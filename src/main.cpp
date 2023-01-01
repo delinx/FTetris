@@ -12,7 +12,7 @@
 int main(int argc, char *argv[])
 {
 
-    int screenWidth = 400;
+    int screenWidth = 500;
     int screenHeight = 600;
 
     InitWindow(screenWidth, screenHeight, "raylib [core] example - basic window");
@@ -60,6 +60,8 @@ int main(int argc, char *argv[])
         gameLoop.drawBackground();
         gameLoop.draw();
 
+        gameLoop.tickScore();
+        gameLoop.drawScore();
         if(gameLoop.DEBUG)
         {
             DrawFPS(10, 10);

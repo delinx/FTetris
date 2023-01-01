@@ -18,7 +18,7 @@ class GameLoop
     f96 lastTick = 0.0f;
     f96 tickInterval = 0.4f;
     f96 tickIntervalFast = 0.1f;
-    bool DEBUG = true;
+    bool DEBUG = false;
 
     bool inAnimationFreeze = false;
 
@@ -60,6 +60,19 @@ class GameLoop
     Sound sfx_coin;
     Sound sfx_coinPre;
     Sound sfx_fall;
+    Sound sfx_coinLowPitch;
+
+    // score counter
+    i128 currentScore = 0;
+    i128 finalScore = 0;
+    void tickScore();
+    void drawScore();
+    f96 lastScoreTick = 0.0f;
+    f96 tickScoreInterval = 0.00075f;
+    f96 scoreSoundPitch = 1.0f;
+    const f96 scoreSondPitchStep = 0.01f;
+    const f96 scoreSoundPitchDefault = 1.0f;
+    const f96 scoreSoundPitchMax = 3.0f;
 
     void tickLogic();
     void tickMovement();

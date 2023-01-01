@@ -16,8 +16,10 @@ GameLoop::GameLoop()
 
     InitAudioDevice();
     sfx_coin = LoadSound("sfx_coin.wav");
+    SetSoundVolume(sfx_coin, 0.5f);
     sfx_coinPre = LoadSound("sfx_coinPre.wav");
     sfx_fall = LoadSound("sfx_fall.wav");
+    sfx_coinLowPitch = LoadSound("sfx_coin_lowPitch.wav");
 }
 
 GameLoop::~GameLoop()
@@ -435,8 +437,8 @@ void GameLoop::animateRemovedRows()
             {
                 Block tmp = bucket->get(iXY(rowX, y));
                 tmp.playingAnimation = true;
-                tmp.bucketPos.y = 0;
-                tmp.bucketPos.x = 12;
+                tmp.bucketPos.y = -1;
+                tmp.bucketPos.x = 16 - (rand() % 6);
                 tmp.movementSpeed = float((rand() % 200) + 400);
                 tmp.deleteAfterAnimating = true;
                 // tmp.inAnimationFreezePtr = inAnimationFreezePtr;
@@ -444,6 +446,7 @@ void GameLoop::animateRemovedRows()
                 // counter to know when all blocks finished animating
                 blocksStillAnimating += 1;
                 tmp.blocksStillAnimatingPtr = &blocksStillAnimating;
+                tmp.scorePtr = &finalScore;
                 tmp.sfx_coin = &sfx_coin;
                 bucket->set(iXY(rowX, y), tmp);
             }
@@ -496,4 +499,49 @@ void GameLoop::moveRowsDown()
             PlaySoundMulti(sfx_fall);
         }
     }
+}
+
+
+
+void GameLoop::tickScore()
+{
+
+
+    if(currentScore < finalScore)
+    {
+        if(time - lastScoreTick > tickScoreInterval)
+        {
+            std::cout << "currentScore " << currentScore << std::endl;
+            std::cout << "finalScore " << finalScore << std::endl;
+            lastScoreTick = time;
+            currentScore += 1;
+            if(currentScore % 10 == 0)
+            {
+                scoreSoundPitch += scoreSondPitchStep;
+                if(scoreSoundPitch > scoreSoundPitchMax)
+                {
+                    scoreSoundPitch = scoreSoundPitchMax;
+                }
+                SetSoundPitch(sfx_coinLowPitch, scoreSoundPitch);
+                PlaySound(sfx_coinLowPitch);
+            }
+        }
+    }
+    else
+    {
+        if(scoreSoundPitch != scoreSoundPitchDefault)
+        {
+            scoreSoundPitch = scoreSoundPitchDefault;
+            SetSoundPitch(sfx_coin, scoreSoundPitch);
+        }
+    }
+}
+
+
+void GameLoop::drawScore()
+{
+    std::string s = std::to_string(currentScore);
+    u8 number_of_zeros = 8 - s.length();  // add 2 zeros
+    s.insert(0, number_of_zeros, '0');
+    DrawText(s.c_str(), 305, 5, 40, GOLD);
 }

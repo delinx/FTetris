@@ -74,7 +74,12 @@ void Block::step(f96 deltaTime)
                 // sound
                 if(sfx_coin != nullptr)
                 {
-                    PlaySoundMulti(*sfx_coin);
+                    // StopSound(*sfx_coin);
+                    // PlaySound(*sfx_coin);
+                }
+                if(scorePtr != nullptr)
+                {
+                    (*scorePtr) += 50;
                 }
             }
             // TODO: play sound

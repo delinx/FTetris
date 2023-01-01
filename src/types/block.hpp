@@ -52,6 +52,9 @@ class Block
     // Sounds
     Sound* sfx_coin = nullptr;
 
+    // score
+    i128* scorePtr = nullptr;
+
     Block& operator=(const Block& other)
     {
         this->visible = other.visible;
@@ -73,6 +76,9 @@ class Block
 
         // sounds
         this->sfx_coin = other.sfx_coin;
+
+        // score
+        this->scorePtr = other.scorePtr;
 
         return *this;
     }
