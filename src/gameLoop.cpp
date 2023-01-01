@@ -1,5 +1,6 @@
 #include "gameLoop.hpp"
 #include <iostream>
+#include <raylib.h>
 #include <string>
 
 GameLoop::GameLoop()
@@ -15,6 +16,8 @@ GameLoop::GameLoop()
 
     InitAudioDevice();
     sfx_coin = LoadSound("sfx_coin.wav");
+    sfx_coinPre = LoadSound("sfx_coinPre.wav");
+    sfx_fall = LoadSound("sfx_fall.wav");
 }
 
 GameLoop::~GameLoop()
@@ -444,6 +447,7 @@ void GameLoop::animateRemovedRows()
                 tmp.sfx_coin = &sfx_coin;
                 bucket->set(iXY(rowX, y), tmp);
             }
+            PlaySoundMulti(sfx_coinPre);
         }
     }
 }
@@ -489,6 +493,7 @@ void GameLoop::moveRowsDown()
                     }
                 }
             }
+            PlaySoundMulti(sfx_fall);
         }
     }
 }

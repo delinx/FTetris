@@ -58,6 +58,8 @@ class GameLoop
 
     // sounds
     Sound sfx_coin;
+    Sound sfx_coinPre;
+    Sound sfx_fall;
 
     void tickLogic();
     void tickMovement();
