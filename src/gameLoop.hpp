@@ -38,8 +38,8 @@ class GameLoop
     Shape shapeTemplate;
     i32 unmovedTicks = 0;
     bool checkSolvedLines();
-    i32 specialChance = 5;  // 1% chance
-    i32 specialRange = 3;   // A B
+    i32 specialChance = 10;  // 10% chance
+    i32 specialRange = 4;    // A B C
     void animateRemovedRows();
     void moveRowsDown();
     i32 yOfRemovedRow = 0;
@@ -70,9 +70,9 @@ class GameLoop
     f96 lastScoreTick = 0.0f;
     f96 tickScoreInterval = 0.00075f;
     f96 scoreSoundPitch = 1.0f;
-    const f96 scoreSondPitchStep = 0.01f;
+    const f96 scoreSondPitchStep = 0.02f;
     const f96 scoreSoundPitchDefault = 1.0f;
-    const f96 scoreSoundPitchMax = 3.0f;
+    const f96 scoreSoundPitchMax = 2.0f;
 
     void tickLogic();
     void tickMovement();

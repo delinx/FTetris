@@ -79,7 +79,15 @@ void Block::step(f96 deltaTime)
                 }
                 if(scorePtr != nullptr)
                 {
-                    (*scorePtr) += 50;
+                    if(Special != 0)
+                    {
+                        (*scorePtr) += (Special * 400) + scoreIncrement;
+                    }
+                    else
+                    {
+
+                        (*scorePtr) += scoreIncrement;
+                    }
                 }
             }
             // TODO: play sound

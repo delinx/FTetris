@@ -437,9 +437,10 @@ void GameLoop::animateRemovedRows()
             {
                 Block tmp = bucket->get(iXY(rowX, y));
                 tmp.playingAnimation = true;
+                tmp.scoreIncrement = ((19 - tmp.bucketPos.y) * 10) + 50;
                 tmp.bucketPos.y = -1;
                 tmp.bucketPos.x = 16 - (rand() % 6);
-                tmp.movementSpeed = float((rand() % 200) + 400);
+                tmp.movementSpeed = float((rand() % 500) + 1000);
                 tmp.deleteAfterAnimating = true;
                 // tmp.inAnimationFreezePtr = inAnimationFreezePtr;
                 //  tmp.animationType = 1;
@@ -514,8 +515,8 @@ void GameLoop::tickScore()
             std::cout << "currentScore " << currentScore << std::endl;
             std::cout << "finalScore " << finalScore << std::endl;
             lastScoreTick = time;
-            currentScore += 1;
-            if(currentScore % 10 == 0)
+            currentScore += 5;
+            if(currentScore % 150 == 0)
             {
                 scoreSoundPitch += scoreSondPitchStep;
                 if(scoreSoundPitch > scoreSoundPitchMax)

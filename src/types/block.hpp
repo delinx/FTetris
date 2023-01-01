@@ -54,6 +54,7 @@ class Block
 
     // score
     i128* scorePtr = nullptr;
+    i32 scoreIncrement = 50;
 
     Block& operator=(const Block& other)
     {
@@ -79,6 +80,7 @@ class Block
 
         // score
         this->scorePtr = other.scorePtr;
+        this->scoreIncrement = other.scoreIncrement;
 
         return *this;
     }
