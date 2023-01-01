@@ -30,6 +30,9 @@ class Block
     f32 animationTimestampCurrent = 0.0f;
     const f32 animationTimestampEnd = 100.0f;
 
+    // animation hack
+    i32* blocksStillAnimatingPtr = nullptr;
+
     f32 animationSpeed = 100.0f;
 
     Color BaseColor = GREEN;
@@ -55,6 +58,7 @@ class Block
         this->playingAnimation = other.playingAnimation;
         this->deleteAfterAnimating = other.deleteAfterAnimating;
         this->animationTimestampCurrent = other.animationTimestampCurrent;
+        this->blocksStillAnimatingPtr = other.blocksStillAnimatingPtr;
         this->animationSpeed = other.animationSpeed;
         this->BaseColor = other.BaseColor;
 

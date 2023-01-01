@@ -52,12 +52,23 @@ void Block::step(f96 deltaTime)
             animationTimestampCurrent = 100.f;
         }
 
+        // finish animation logic when deletion was cheduled as well
         if(animationTimestampCurrent == 100.f && deleteAfterAnimating)
         {
-            if(bucketPos.x == 12 && bucketPos.y == 0 && positionVisualCurrent.y == positionVisualTarget.y)
+            if(positionVisualCurrent.y == positionVisualTarget.y)
             {
                 exist = false;
                 playingAnimation = false;
+                if(blocksStillAnimatingPtr != nullptr)
+                {
+                    (*blocksStillAnimatingPtr)--;
+                    std::cout << "Block [" << pseudoUniqueID << "] finished animating and will be deleted now. (blocksStillAnimatingPtr: "
+                              << *blocksStillAnimatingPtr << ")\n";
+                }
+                else
+                {
+                    std::cout << "Block [" << pseudoUniqueID << "] finished animating and will be deleted now. (blocksStillAnimatingPtr: nullptr)\n";
+                }
             }
             // TODO: play sound
         }

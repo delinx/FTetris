@@ -54,6 +54,7 @@ class GameLoop
     Color clr6 = Color { 140, 90, 170, 255 };
     Color clr7 = Color { 230, 65, 55, 255 };
     Color randomColor();
+    i32 blocksStillAnimating = 0;
 
     void tickLogic();
     void tickMovement();

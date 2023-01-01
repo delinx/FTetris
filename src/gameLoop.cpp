@@ -59,8 +59,9 @@ void GameLoop::tickLogic()
 
     if(inAnimationFreeze)
     {
-        checkIfReadyToResume();
-        return;
+        // if there is no unsolved lines left, unfreeze
+        if(!checkSolvedLines())
+            return;
     }
 
     // icrease tick speed if down is held
@@ -427,11 +428,31 @@ void GameLoop::animateRemovedRows()
                 tmp.deleteAfterAnimating = true;
                 // tmp.inAnimationFreezePtr = inAnimationFreezePtr;
                 //  tmp.animationType = 1;
+                // counter to know when all blocks finished animating
+                blocksStillAnimating += 1;
+                tmp.blocksStillAnimatingPtr = &blocksStillAnimating;
                 bucket->set(iXY(rowX, y), tmp);
-                // TODO: Make them fly towards score
             }
+        }
+    }
+}
+
+void GameLoop::moveRowsDown()
+{
+    for(i32 y = 0; y < bucket->HEIGHT; y++)
+    {
+        bool solved = true;
+        for(i32 x = 0; x < bucket->WIDTH; x++)
+        {
+            if(!bucket->get(iXY(x, y)).exist)
+            {
+                solved = false;
+                break;
+            }
+        }
+        if(solved)
+        {
             // move all blocks above down
-            yOfRemovedRow = y;
             for(i32 remainingRows = y; remainingRows > 1; remainingRows--)
             {
                 for(i32 x = 0; x < bucket->WIDTH; x++)

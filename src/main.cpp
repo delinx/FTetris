@@ -63,6 +63,8 @@ int main(int argc, char *argv[])
         if(gameLoop.DEBUG)
         {
             DrawFPS(10, 10);
+            std::string strtmp = "blocksStillAnimating:" + std::to_string(gameLoop.blocksStillAnimating);
+            DrawText(strtmp.c_str(), 10, 70, 20, RED);
             if(gameLoop.inAnimationFreeze)
             {
                 DrawText("inAnimationFreeze", 10, 30, 20, RED);
